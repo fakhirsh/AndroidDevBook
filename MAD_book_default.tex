@@ -1,0 +1,38 @@
+\documentclass[a4paper,12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{wasysym}
+\usepackage{hyperref}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\hypersetup{
+	colorlinks=true, % make the links colored
+	linkcolor=blue, % color TOC links in blue
+	urlcolor=red, % color URLs in red
+	linktoc=all % 'all' will create links for everything in the TOC
+}
+
+\begin{document}
+
+\include{./chapters/Front_Matter/front_default}
+%\include{./chapters/Front_Matter/preface_default}
+\include{./chapters/ch01/ch01}
+\include{./chapters/ch02/ch02}
+\include{./chapters/ch03/ch03}
+\include{./chapters/ch04/ch04}
+\include{./chapters/ch05/ch05}
+\include{./chapters/ch06/ch06}
+\include{./chapters/ch07/ch07}
+\include{./chapters/ch08/ch08}
+\include{./chapters/ch09/ch09}
+\include{./chapters/ch10/ch10}
+
+\backmatter
+% bibliography, glossary and index would go here.
+
+\end{document}
