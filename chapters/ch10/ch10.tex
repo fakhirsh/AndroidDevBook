@@ -105,7 +105,7 @@ Let's review the code line by line:
 
 Run this app and you will see a bunch of entries in the list view. As usual you can click these but nothing will happen yet. \\
 
-Let's explore \texttt{simple\_list\_item\_1} a bit more. Go to line 23 and right click on the \texttt{simple\_list\_item\_1} name, a popup menu will appear. Select ``Go to $\rightarrow Declaration$'', an xml file named \texttt{simple\_list\_item\_1.xml} will open up in the designer window. If you look at it closely you'll notice that this layout file contains only one \texttt{TextView} widget, exactly as we claimed earlier:
+Let's explore \texttt{simple\_list\_item\_1} a bit more. Go to line 23 and right click on the \texttt{simple\_list\_item\_1} name, a popup menu will appear. Select ``Go to $\rightarrow$ Declaration'', an xml file named \texttt{simple\_list\_item\_1.xml} will open up in the designer window. If you look at it closely you'll notice that this layout file contains only one \texttt{TextView} widget, exactly as we claimed earlier:
 
 \begin{center}
 	\includegraphics[scale=0.4]{chapters/ch10/images/10}
@@ -114,4 +114,133 @@ Let's explore \texttt{simple\_list\_item\_1} a bit more. Go to line 23 and right
 You can also switch to text mode and take a look at its xml source code.
 
 \subsection{Providing Complex Data Source}
+Right click on the package name group and create a new class called ``\texttt{Employee}'':
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/11}
+\end{center}
+
+Open up \texttt{Employee} class and add member variables as follows (note they are all private):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/12}
+\end{center}
+
+Left-click anywhere inside the class. Then right click and select ``\texttt{Generate}'', then from the popup menu select ``\texttt{Constructor}''. From the window select all the variables at once using shift key and hit generate:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/13}
+\end{center}
+
+A constructor will be created in the class. You can also write it manually:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/14}
+\end{center}
+
+Open up ``\texttt{MainActivity.java}''. Inside the \texttt{onCreate} method, delete the previous code that we wrote and create a list of \texttt{Employees} and populate with some values (the more entries the better). Also get the reference for our list view object and create an array adapter. Note that the array adapter will now be of type \texttt{Employee} instead of \texttt{String} (lines 14 to 23):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/15}
+\end{center}
+
+If you run the app on a device it shows the following output:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/16}
+\end{center}
+
+In java the \href{https://developer.android.com/reference/java/lang/Object.html}{\texttt{Object}} class is the parent class of all classes. Whenever you try to print an object or convert it into a \texttt{String} the \texttt{Object} class's ``\texttt{toString}'' method is called. By default it returns a string containing object specific details such as its reference. Since the default array adapter is expecting a string data source by default, it tries to convert \texttt{Employee} object into a \texttt{String}, and hence the reason you are seeing the above output. We can easily override this method to create a string of our own choice:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/17}
+\end{center}
+
+yielding the following output in desired format:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/18}
+\end{center}
+
+Or you can also return something a bit more complex:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/19}
+\end{center}
+
+resulting in the output:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/20}
+\end{center}
+
+We know that the default input data source for array adapters is \texttt{String}. Also the default view that the array adapter generates against each data row is a single \texttt{TextView}. So let's hack it a little bit and try to change the default outlook by specifying our own simple layout file. \\
+
+Create a new layout named ``\texttt{listview\_simple\_layout.xml}''. Open it up in text mode and delete the root element. Now add a single \texttt{TextView} object inside this file. As opposed to \texttt{activity\_main.xml} (or any activity layout file) there is no root layout here:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/21}
+\end{center}
+
+You may see the keyword \texttt{android} highlighted in red. The reason for this is that we didn't specify the android namespace in our xml code. Place the keyboard cursor on the \texttt{android} keyword, a tool tip appears asking you to press \texttt{Alt+Enter}:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/22}
+\end{center}
+
+Pressing \texttt{Alt+Enter} will bring up a popup menu. Select ``Create namespace declaration'':
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/23}
+\end{center}
+
+This will automatically add the necessary definitions and namespaces as shown below (line 6):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/24}
+\end{center}
+
+Switch to design mode. You should see a simple text view rendered without any issues. Change its properties to match the following:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/25}
+\end{center}
+
+Go back to \texttt{MainActivity.java} and replace ``android.R.layout.simple\_list\_item\_1'' with our custom layout ``R.layout.listview\_simple\_layout'' that we just created (line 21):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/26}
+\end{center}
+
+Note that we are NOT appending it with \texttt{android} keyword because our layout does not reside in the default android namespace, it is inside our project namespace. \\
+
+If you run this on a device you will see the changed outlook:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/27}
+\end{center}
+
+If you click any row nothing seems to work. But don't worry the system is properly registering your clicks. It is just that it has disabled its animations because you specified your own custom background. If you set the background to nothing and run the app again, you will notice the animations coming back when you click any entry.
+
+\subsection{Exercise}
+\begin{enumerate}
+	\item Add more data (i.e Employees) so that the list becomes scrollable.
+	\item Try changing the outlook of the rows to something interesting.
+\end{enumerate}
+
+\section{Handling Input Events}
+As we did with the buttons registering click events is pretty simple and straightforward. But instead of using \texttt{onClick} event, we will now set the \texttt{onItemClick} listener. Add the following code right after our previous code (lines 28 to 33 below):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/28}
+\end{center}
+
+Notice line 30 above, the event handler method. We are interested in the \texttt{position} parameter. This parameter tells us the index of the corresponding data element on which the user clicked. The \texttt{view} parameter gives us the entire view object for that particular row. This can be as simple as a text view or very complex layouts within layouts. Let's read the string from the row and display it in a toast. Inside the \texttt{onItemClick} listener method add the following code (lines 32 to 36):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/29}
+\end{center}
+
+We know for sure that by default array adapter generates a single text view for each for of the list view. So in line 38 we are just casting the view into a \texttt{TextView}. Then in line 39 we are reading its string value. Finally in line 40 display the position index of the selected row along with its visible string. Notice that in line 40 ``\texttt{MainActivity.this}'' is being passed instead of just ``\texttt{this} as the current context.
+
 
