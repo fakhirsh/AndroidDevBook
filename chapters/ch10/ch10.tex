@@ -229,7 +229,7 @@ If you click any row nothing seems to work. But don't worry the system is proper
 \end{enumerate}
 
 \section{Handling Input Events}
-As we did with the buttons registering click events is pretty simple and straightforward. But instead of using \texttt{onClick} event, we will now set the \texttt{onItemClick} listener. Add the following code right after our previous code (lines 28 to 33 below):
+As we did with the buttons registering click events is pretty simple and straightforward. Instead of using \texttt{onClick} event, we will now set the ``\texttt{onItemClick}'' listener. Add the following code right after our previous code (lines 28 to 33 below):
 
 \begin{center}
 	\includegraphics[scale=0.4]{chapters/ch10/images/28}
@@ -241,6 +241,210 @@ Notice line 30 above, the event handler method. We are interested in the \texttt
 	\includegraphics[scale=0.4]{chapters/ch10/images/29}
 \end{center}
 
-We know for sure that by default array adapter generates a single text view for each for of the list view. So in line 38 we are just casting the view into a \texttt{TextView}. Then in line 39 we are reading its string value. Finally in line 40 display the position index of the selected row along with its visible string. Notice that in line 40 ``\texttt{MainActivity.this}'' is being passed instead of just ``\texttt{this} as the current context.
+We know for sure that by default array adapter generates a single text view for each for of the list view. So in line 32 we are just casting the view into a \texttt{TextView}. Then in line 33 we are reading its string value. Finally in line 34 display the position index of the selected row along with its visible string. Notice that in line 34 ``\texttt{MainActivity.this}'' is being passed instead of just ``\texttt{this} as the current context. \\
+
+Run this app and click any of its row, a toast will be displayed showing information unique to that row.
+
+\section{Adding Data Dynamically}
+
+Until now we've been using a fixed array of objects. What if you wanted to add data into the list view on the fly, for example on some button click event? Well the first bad news is that you can't add data directly to the list view. We need to do that through the ``\texttt{ArrayAdapter}''. \\
+
+Open up \texttt{activity\_main.xml} in design mode and place a button under the list view. Also attach an event listener function (in this case \texttt{onBtnClick}) to this button:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/30}
+\end{center}
+
+We have to make some modifications to our data source. Instead of using a fixed size
+array, we will use ``\texttt{ArrayList}''. An ``\texttt{ArrayList}'' in java is just like a \texttt{vector} in C++, we can resize it dynamically. \\
+
+Open up \texttt{MainActivity.java} and make \texttt{ArrayAdapter} and \texttt{ArrayList} as class member variables so that we can access these from anywhere in the class (lines 16-17):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/31}
+\end{center}
+
+Inside the \texttt{onCreate} method, instead of a static array, add employees to array list member variable (lines 24 to 27):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/32}
+\end{center}
+
+We don't need to change anything else. Run the code on a device and you should see our previous app with no apparent change. Clicking any row should display toast as usual. The only difference is the data source from which data is coming. \\
+
+Ok, well done! Now go to the button click listener. All you have to do is to call the `\texttt{add}' method on the \textbf{array adapter} (NOT the array list):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/33}
+\end{center}
+
+Code explanation:
+
+\begin{itemize}
+	\item \textit{Line 49 to 52:} 
+\end{itemize}
+
+If you run it now and click the button, it will dynamically update the list view:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/34}
+\end{center}
+
+\vskip 5mm
+\begin{quote}
+	``\textbf{\underline{WARNING:} IF YOU ARE USING A FIXED ARRAY, THE ARRAY ADAPTER WILL TRY TO ADD DATA INTO IT AND YOUR PROGRAM WILL \textcolor{red}{CRASH} !!!}''
+\end{quote}
+
+\section{Exercise}
+
+Create a simple ``to-do list'' app similar to the following. As soon as the user types in data in the edit view and press submit button, the list view underneath it should properly be updated. As soon as any item is submitted the edit text field should reset to empty. When any row is clicked it should display a toast. Following figure shows sample output:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/35}
+\end{center}
 
 
+\section{Customizing the Array Adapter}
+Let's change the outlook of the list view. For this we need to customize the array adapter. 
+
+We need to create a new layout, we can make it as complex as you like. In this example, there is a root element of ``horizontal linear layout''. Inside it there is a picture, another linear layout having two text views as children and finally an image button. Conceptual view looks something like this:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/36}
+\end{center}
+
+
+First of all extract the accompanied zip file named ``\texttt{listView\_pics.zip}'' into the \texttt{drawable} folder:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/37}
+\end{center}
+
+Now create a new layout named ``\texttt{my\_layout.xml}''. Try to match the following figure. You can experiment with paddings and margins etc. Set width and height for both the image and image button on left and on right to 64dp $\times$ 64dp (NOTE: The red cross image on the right is an \textbf{image button} and NOT an image view): 
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/38}
+\end{center}
+
+For this activity we've set the following \texttt{id}s for the components:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/39}
+\end{center}
+
+Alright, we are now set to customize the array adapter. Create a new java class named ``\texttt{MyArrayAdapter}''. Make sure that the \texttt{MyArrayAdapter.java} file is in the same directory as \texttt{MainActivity.java}:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/40}
+\end{center}
+
+Open up \texttt{MyArrayAdapter.java} in the editor and extend the \texttt{MyArrayAdapter} class with ``\texttt{ArrayAdapter<Employee>}'', Also
+create a constructor as follows:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/41}
+\end{center}
+
+Code explanation:
+
+\begin{itemize}
+	\item \textit{Line 14:} The constructor for our adapter. It takes three parameters:
+		\begin{itemize}
+			\item \textbf{context:} This is the current context of the application.
+			\item \textbf{resource:} The resource ID for a layout file containing our custom layout
+			\item \textbf{objects:} The list of objects coming from the data source, in our case the \texttt{Employee}'s array list.
+		\end{itemize}
+	
+	\item \textit{Line 15:} You \textbf{must} call the constructor for super class as well.
+\end{itemize}
+
+For future reference we need to save a few things i.e the context, the data source, the resource id and reference to the current array adapter object. Add following code to the \texttt{MyArrayAdapter} class:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/42}
+\end{center}
+
+Remember that the array adapter populates the list view by inflating layout for each and every row. We need to ``override'' a method called \texttt{getView()}. This method is called for ``each'' row in the list view and then it generates a corresponding row view for the \texttt{ListView}. 
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/43}
+\end{center}
+
+Note that the \texttt{getView} method returns a view object. Line 34 is returning default view which is expected to contain a single text view object. Delete line 34, we don't need it as we will shortly create our custom view and return that one instead. For now we are only interested in the position parameter. This is the index of the current row in data source. Modify the \texttt{getView} method as follows:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/44}
+\end{center}
+
+Let's review the code:
+
+\begin{itemize}
+	\item \textit{Line 36:} Get the reference to ``Layout Inflator''. In sections \ref{RAI:inflater} and \ref{ITS:moreOnInflater} we discussed inflaters in detail. They basically take a layout xml as input and then instantiate corresponding view objects.
+	
+	\item \textit{Line 37:} Inflate the layout resource in a view object.
+	
+	\item \textit{Line 38:} Return the view object we just inflated. Each time a list view row is created this view object will be used.
+\end{itemize}
+
+Almost there. We need to create a \texttt{MyArrayAdapter} object instead of an \texttt{ArrayAdapter<Employee>}. Open up \texttt{MainActivity.java} and modify the \texttt{onCreate} method code as follows (highlighted in red, lines 17, 31 and 32):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/45}
+\end{center}
+
+Run the app on a device and you should see the following output:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/46}
+\end{center}
+
+Clicking the button at the bottom of the screen should add rows as expected. However if you try to click any row it appears to be frozen. However the cancel buttons appear to be responding properly to the touch events. Let's fix this. \\
+
+Let's first add the data correctly to the list view rows. Open up \texttt{MyArrayAdapter.java} and modify the \texttt{getView} method as follows:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/47}
+\end{center}
+
+A lot of things happening in the above code, but it is nothing new, we have already done similar stuff in previous classes. Take some time to go through it and make sure you understand everything. \\
+
+If you run the app on a device you see following output:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/48}
+\end{center}
+
+But the list view rows are still not clickable. Let's fix that. Go to ``\texttt{activity\_main.xml}'' file, in the text mode, add ``\texttt{android:touchscreenBlocksFocus}'' attribute to the \texttt{ListView} element and set it to \texttt{true} (line 17):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/49}
+\end{center}
+
+Remember the click listener we added for our list view in the \texttt{onCreate} method? We need to change it a little bit because we are now using custom row views. Open up \texttt{MainActivity.java} and inside the \texttt{onCreate} method modify the list view's \texttt{onItemClick} method as follows:
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/50}
+\end{center}
+
+If you run the app now the list view will properly respond to clicks and you should see appropriate toast messages. However the delete buttons on the right are still not working. As a final step let's fix those. \\
+
+All we have to do now is to attach a click listener to the delete button. Open up \texttt{MyArrayAdapter.java} and inside the \texttt{getView} method, add the following lines of code near the bottom of the method (lines 56 to 63):
+
+\begin{center}
+	\includegraphics[scale=0.4]{chapters/ch10/images/51}
+\end{center}
+
+Again there is nothing new going on over here, you must be familiar with the code by now. Run the app and check out if it is running properly and deleting rows as expected.
+
+\subsection{Exercise}
+In line 57 above, why are we setting the button id to ``\texttt{position}'' ? What does line 61 do?
+
+\section{Spinners}
+You are now fully qualified to implement \href{https://developer.android.com/guide/topics/ui/controls/spinner.html}{spinners} yourself. Just one thing the listener function for spinners is ``\texttt{OnItemSelectedListener}''.
+
+\subsection{Exercise}
+\begin{enumerate}
+	\item Place a spinner onto your activity and add a bunch of values in it (try both methods, XML and code). Implement click events.
+	\item Ok, now go and make something cool using spinners and list views combined! Maybe try adding spinners inside list view rows?
+	\item Try to add spinner on the tool bar (action bar).
+\end{enumerate}

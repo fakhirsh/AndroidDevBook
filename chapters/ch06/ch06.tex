@@ -38,7 +38,7 @@ Suppose that we have another device having almost same physical screen size as t
 
 \subsection{Setting Units Through Design View}
 \subsubsection{Create New Project}
-\label{lec07:createProj}
+\label{ITS:createProj}
 Create a new project from scratch. Perform the following steps:
 \begin{enumerate}
 	\item Create a new project having name ``\texttt{Lec07}''
@@ -48,7 +48,7 @@ Create a new project from scratch. Perform the following steps:
 \end{enumerate}
 
 \subsection{Setting Units Through Design XML}
-\label{lec07:unitXML}
+\label{ITS:unitXML}
 Open up ``\texttt{activity\_main.xml}'' and go to the design mode. Select ``text view'' and change its background color to anything you like. Set it's \texttt{id} to ``\texttt{idText}''. Also set the \texttt{layout:width} to 230 \texttt{px} \textit{(pixels)}. Now cycle through different devices from largest to the smallest and see how \textit{dramatically different} the size of our text view looks on various screens:
 \begin{center}
 	\includegraphics[scale=0.4]{chapters/ch06/images/3}
@@ -57,7 +57,7 @@ Open up ``\texttt{activity\_main.xml}'' and go to the design mode. Select ``text
 After you've performed the task above, change \texttt{layout:width} of the text view to 230 \texttt{\textbf{dp}}. Again cycle through different mobile phones (not the tablets) and observe that this time the size of the text view remains roughly same across all the devices. Tables are special cases because they have a very big physical screen size and a relatively low \texttt{dpi}.
 
 \subsection{Setting Units Through Java Code}
-\label{lec07:unitJavaCode}
+\label{ITS:unitJavaCode}
 To make our lives as programmers easier the developers at android have devised different density ``buckets'' within which a device can fall, as shown in table \ref{lec07:densityChart}. Note the third column ``Density factor''. This shows how many more times dense the device is as compared to the standard \texttt{mdpi}. \\
 
 \begin{table}
@@ -74,7 +74,7 @@ To make our lives as programmers easier the developers at android have devised d
 			\hline 
 		\end{tabular} 
 	\end{center}
-	\caption{Mobile device density table}\label{lec07:densityChart}
+	\caption{Mobile device density table}\label{ITS:densityChart}
 \end{table}
 
 Open up \texttt{MainActivity.java}. Inside the \texttt{onCreate} method add the following lines (14, 15):
@@ -113,8 +113,8 @@ Create a layout similar to the following. Be sure to set the width of each text 
 Now cycle through the devices. Specially note the size of the blue bar (300 dp). Notice how it re-adjusts itself, looking almost identical on almost all the devices (except for the tablets, as explained in section \ref{lec07:unitXML}).
 
 \section{Displaying Images}
-\label{lec07:displayImages}
-Table \ref{lec07:densityChart} above shows density chart for different screens. Also from section \ref{lec07:dp} we know that layout sizes should be specified in device independent pixels or \texttt{dp}. Let's see what happens when we try to display a picture on the screen.\\
+\label{ITS:displayImages}
+Table \ref{ITS:densityChart} above shows density chart for different screens. Also from section \ref{ITS:dp} we know that layout sizes should be specified in device independent pixels or \texttt{dp}. Let's see what happens when we try to display a picture on the screen.\\
 
 Following section \ref{lec07:createProj} create a new project and name it \texttt{Lec07b}. Open up \texttt{activity\_main.xml}. Change the text of the default text view to anything such as ``Picture Demo''. \\
 
@@ -261,10 +261,10 @@ You can view more about launcher icons \href{https://developer.android.com/guide
 Use the \href{https://romannurik.github.io/AndroidAssetStudio/}{``Android Asset Studio''} to create launcher icons having transparent background. Apply the icons to your app and see how it looks (you can use any graphic file you wish for the source, you can create your own or just search google).
 
 \section{More on Layout Inflater}
-\label{lec07:moreOnInflater}
+\label{ITS:moreOnInflater}
 Layout inflater parses a layout xml file and creates java objects from that. We have discussed the layout inflater many times before, such as in Lecture 4 section 3.2. In this section we will actually try to inflate a custom layout xml into a root \texttt{ViewGroup} object through java code. \\
 
-Create a new project from scratch as shown in section \ref{lec07:createProj} and name it anything you like.
+Create a new project from scratch as shown in section \ref{ITS:createProj} and name it anything you like.
 
 Let's first create the XML layout file. In the project panel, under the \texttt{res} folder/group, right click on \texttt{layout} folder and select ``New $\rightarrow$ Layout Resource File''. You can give the new layout file any name you like but for this tutorial we will call it ``\texttt{my\_layout}''. A new layout xml file will be created inside the \texttt{layout} folder:
 
