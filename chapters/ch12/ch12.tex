@@ -269,3 +269,56 @@ Right now the facebook button implements logout. But you need to register callba
 
 \section{Access Personal Information}
 \label{FBI:accessPersonalInformation}
+
+Create a new activity named ``\texttt{PersonalActivity}'' and uncheck its backward compatibility check box. Leave all other options as default:
+
+\begin{center}
+	\includegraphics[scale=\SourceCodeScale]{chapters/ch12/images/28}
+\end{center}
+
+After creating the activity open up \texttt{MainActivity.java} and attach an event handler to the ``Proceed'' button. When this button is clicked it launches ``PersonalActivity''. Remepber that the proceed button will become enabled only if the user is successfully logged in:
+
+\begin{center}
+	\includegraphics[scale=\SourceCodeScale]{chapters/ch12/images/29}
+\end{center}
+
+Run your app and make sure it is working properly. \\
+
+Whenever we want to access some data or information from facebook we need to ask the user for permissions. Open up \texttt{MainActivity.java} and inside the \texttt{onCreate} method right after where you initialized facebook sdk add the following lines (31 to 45):
+
+\begin{center}
+	\includegraphics[scale=\SourceCodeScale]{chapters/ch12/images/30}
+\end{center}
+
+The code is simple. Here we are accessing four permissions i.e user's ``\textit{public profile}'', his ``\textit{facebook status}'', his ``\textit{email address}'' and his ``\textit{list of friends}''. \\
+
+Open up \texttt{activity\_personal.xml} in text mode and add two things (lines ): 
+\begin{enumerate}
+	\item a text view
+	\item a special widget called ``Profile Picture View''. Just add the following code inside root layout and it will display itself properly.
+\end{enumerate}
+
+\begin{center}
+	\includegraphics[scale=\SourceCodeScale]{chapters/ch12/images/31}
+\end{center}
+
+\texttt{activity\_personal.xml} looks like the following in design mode:
+
+\begin{center}
+	\includegraphics[scale=\FigureScale]{chapters/ch12/images/32}
+\end{center}
+
+\texttt{onCreate} method of \texttt{PersonalActivity}:
+
+\begin{center}
+	\includegraphics[scale=\SourceCodeScale]{chapters/ch12/images/33}
+\end{center}
+
+
+Run the app and it will display the name and the profile picture correctly:
+
+\begin{center}
+	\includegraphics[scale=\FigureScale]{chapters/ch12/images/34}
+\end{center}
+
+\section{Sharing Content on Facebook}
