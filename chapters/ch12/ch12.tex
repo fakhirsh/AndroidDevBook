@@ -1,3 +1,11 @@
+
+% Increment counter for exercises 
+%   (NOT WORKING... BUGS...)
+%\newcounter{fbiExerciseCount}
+%\setcounter{fbiExerciseCount}{0}
+%\newcommand{\fbiCurrentExerciseNum}{\addtocounter{fbiExerciseCount}{1} }
+
+
 \chapter{Facebook Integration}
 \label{FBI}
 
@@ -18,10 +26,10 @@ You can download the facebook app from google play store from \href{https://play
 
 Before proceeding any further make sure that both of these apps are installed on your physical device.
 
-\subsection{Create new project}
+\subsection{Create New Project}
 \label{FBI:createProj}
 
-Perform the following steps and create a new project from scratch. Note that a few steps are different from previous chapters:
+Close any already opened projects. Perform the following steps and create a new project from scratch. Note that a few steps are different from previous chapters:
 \begin{enumerate}
 	\item Create a new project having name ``\texttt{MobileBookApp}''. Also note the package name (you can give anything unique) and save it at a safe location. We will need it later on.
 	\item Select minimum API 16 : Android 4.1 (Jelly Bean).
@@ -78,12 +86,31 @@ A new panel for the android platform will appear near the bottom of the page. In
 	\includegraphics[scale=\SourceCodeScale]{chapters/ch12/images/6}
 \end{center}
 
-Finally we need the missing piece of the puzzle, the key hashes. For windows you need to execute ``\texttt{keytool.exe}'' which is located in the ``\texttt{<JDK-path>\\bin}'' folder. If you've setup jdk paths in the system environment then you should be able to run \texttt{keytool.exe} from anywhere. Second thing you'll need to install is the \texttt{openssl}. Just follow \href{https://sourceforge.net/projects/openssl/}{this} link, download and install \texttt{openssl}. You can add it to the system path so that \texttt{openssl} command can be executed from anywhere. Finally from the command prompt run the following (the following command is in single line, we are writing here in multiple lines due to limited space): 
+Finally we need the missing piece of the puzzle, the key hashes. For windows you need to execute ``\texttt{keytool.exe}'' which is located in the ``\texttt{<JDK-path>\\bin}'' folder. If you've setup jdk paths in the system environment then you should be able to run \texttt{keytool.exe} from anywhere. 
+
+Second thing you'll need to install is the \texttt{openssl}. Go to  \href{https://sourceforge.net/projects/openssl/}{this link} and download openssl compressed package. Extract it anywhere and remember its path, for this chapter we assume that you've extracted it at ``\texttt{C:$\backslash$OpenSSL}''. Now open up the system variables dialog box and do two things:
+
+\begin{enumerate}
+	\item Add ``\texttt{C:$\backslash$OpenSSL$\backslash$bin}'' to the current path so that you can run \texttt{openssl.exe} from anywhere.
+	
+	\item Create a new system variable named ``\texttt{OPENSSL\_CONF}'' and set its value to ``\texttt{C:$\backslash$OpenSSL$\backslash$bin$\backslash$openssl.cnf}''
+\end{enumerate}
+
+Restart your computer so that the changes can take effect. \\
+
+Finally from the command prompt run the following (the following command is in single line, we are writing here in multiple lines due to limited space): 
 
 \begin{verbatim}
 c:\> keytool -exportcert -alias androiddebugkey -keystore
               %HOMEPATH%\.android\debug.keystore 
               | openssl sha1 -binary | openssl base64
+\end{verbatim}
+
+For MacOS or Linux it is really easy, all the tools are already installed. You just need to execute the following command in the console:
+\begin{verbatim}
+~]$ keytool -exportcert -alias androiddebugkey -keystore 
+            ~/.android/debug.keystore 
+            | openssl sha1 -binary | openssl base64
 \end{verbatim}
 
 This will ask you for a password. Give it anything reasonable. Finally the utility will output a ``key hash'' string that we need:
@@ -243,8 +270,8 @@ Code explanation:
 	
 \end{itemize}
 
-\subsection{Exercise 1}
-\label{FBI:exercise1}
+\subsection{Exercise 2}
+\label{FBI:exercise2}
 Open up \texttt{activity\_main.xml} layout file. Add a text view and a button (initially disabled) underneath the facebook button. Whenever login is successful the text view should display ``Login Successful!!'' and the button gets enabled. It should display appropriate messages for other login callback methods and disable the proceed button. The ``proceed'' button does nothing for now but later on we will call another activity from it.
 
 \begin{center}
@@ -255,14 +282,14 @@ Open up \texttt{activity\_main.xml} layout file. Add a text view and a button (i
 
 What is an \textit{Access Token}? Hints \href{https://developers.facebook.com/docs/facebook-login/access-tokens/}{here} and \href{https://developers.facebook.com/docs/marketing-api/authentication}{here}.
 
-\subsection{Exercise 2}
-\label{FBI:exercise2}
+\subsection{Exercise 3}
+\label{FBI:exercise3}
 Sometimes when you run the app it is already logged in, the facebook button with actually show ``Log Out'' message. In this case it will NOT go into the callback methods, so our text view and button will not properly get updated. Fix this issue. Check at the beginning of the activity whether if the user is already logged in or not. If the user is already logged in then update the UI immediately.
 
 \textit{Hint:} \href{http://stackoverflow.com/questions/29294015/how-to-check-if-user-is-logged-in-with-fb-sdk-4-0-for-android}{here}.
 
-\subsection{Exercise 3}
-\label{FBI:exercise3}
+\subsection{Exercise 4}
+\label{FBI:exercise4}
 Right now the facebook button implements logout. But you need to register callbacks to detect whether the user has logged out and change the user interface (text view and button) accordingly.
 
 \textit{Hint:} \href{http://stackoverflow.com/questions/29305232/facebook-sdk-4-for-android-how-to-log-out-programmatically}{here}, \href{http://stackoverflow.com/questions/30360068/how-to-detect-logout-event-with-the-facebook-android-api-v4}{here} and \href{http://stackoverflow.com/questions/29294015/how-to-check-if-user-is-logged-in-with-fb-sdk-4-0-for-android}{here}.
@@ -321,4 +348,23 @@ Run the app and it will display the name and the profile picture correctly:
 	\includegraphics[scale=\FigureScale]{chapters/ch12/images/34}
 \end{center}
 
+
 \section{Sharing Content on Facebook}
+
+\textit{\textbf{--Section under development-- \\}}
+
+Official documentation (easy to follow) about sharing can be found \href{https://developers.facebook.com/docs/sharing/android/}{here}.
+
+\subsection{Exercise 5}
+\begin{enumerate}
+	\item Share a message on faceboolk wall
+	\item Share two pictures on the wall.
+	\item Share small movie clip.
+\end{enumerate}
+
+
+\section{Facebook Graph API Basics}
+\subsection{Getting user id, name, email}
+
+\subsection{Getting List of Friends}
+\subsubsection{Getting Friend's Details}
